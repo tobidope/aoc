@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.aoc
-          key: ${{ runner.os }}-aoc-${{ hashFiles('~/.aoc/**/day*') }}
+          key: ${{ runner.os }}-aoc-${{ github.sha }}
           restore-keys: ${{ runner.os }}-aoc-
       - name: Build with Maven
         run: mvn --batch-mode clean package
