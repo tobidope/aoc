@@ -18,6 +18,12 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Cache aoc input
+        uses: actions/cache@v2
+        with:
+          path: ~/.aoc
+          key: ${{ runner.os }}-aoc
+          restore-keys: ${{ runner.os }}-aoc
       - name: Build with Maven
         run: mvn --batch-mode clean package
         env:
