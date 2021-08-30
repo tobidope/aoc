@@ -54,7 +54,7 @@
                 </requireEnvironmentVariable>
                 <requireEnvironmentVariable>
                   <variableName>AOC_SAVEPATH</variableName>
-                  <message>Set AOC_PATH to the path where aoc input should be saved</message>
+                  <message>Set AOC_SAVEPATH to the path where aoc input should be saved</message>
                 </requireEnvironmentVariable>
               </rules>
               <fail>true</fail>
