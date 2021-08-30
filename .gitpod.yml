@@ -9,3 +9,9 @@ ports:
     onOpen: open-preview
 image:
   file: .gitpod.Dockerfile
+
+vscode:
+  extensions:
+    - redhat.java
+    - vscjava.vscode-java-debug
+    - vscjava.vscode-java-test
