@@ -1,18 +1,17 @@
 package de.tobiasbell.aoc.loader;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
-import de.mkammerer.wiremock.WireMockExtension;
+import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
+import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.RegisterExtension;
 
 import java.io.IOException;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@WireMockTest
 class WebLoaderTest {
-    @RegisterExtension
-    WireMockExtension wireMock = new WireMockExtension();
 
     public static void main(String[] args) throws IOException, InterruptedException {
         final String sessionId = "xxx";
@@ -22,19 +21,20 @@ class WebLoaderTest {
     }
 
     @Test
-    void callsCorrectUrl() throws IOException, InterruptedException {
+    void callsCorrectUrl(WireMockRuntimeInfo wmRuntimeInfo) throws IOException, InterruptedException {
         // given
-        final WebLoader webLoader = WebLoader.withBaseUrl(wireMock.baseUrl(), "sessionId");
+        final WebLoader webLoader = WebLoader.withBaseUrl(wmRuntimeInfo.getHttpBaseUrl(), "sessionId");
         // when
         webLoader.loadInput(2015, 1);
         //then
-        wireMock.verify(getRequestedFor(urlEqualTo("/2015/day/1/input")));
+        verify(getRequestedFor(urlEqualTo("/2015/day/1/input")));
     }
 
     @Test
-    void downloadsData() throws IOException, InterruptedException {
+    void downloadsData(WireMockRuntimeInfo wmRuntimeInfo) throws IOException, InterruptedException {
         // given
-        final WebLoader webLoader = WebLoader.withBaseUrl(wireMock.baseUrl(), "sessionId");
+        final WireMock wireMock = wmRuntimeInfo.getWireMock();
+        final WebLoader webLoader = WebLoader.withBaseUrl(wmRuntimeInfo.getHttpBaseUrl(), "sessionId");
         wireMock.stubFor(WireMock.get(urlEqualTo("/2015/day/1/input"))
                 .willReturn(ok("input")));
         // when
@@ -44,9 +44,10 @@ class WebLoaderTest {
     }
 
     @Test
-    void sendsAuthenticationCookie() throws IOException, InterruptedException {
+    void sendsAuthenticationCookie(WireMockRuntimeInfo wmRuntimeInfo) throws IOException, InterruptedException {
         // given
-        final WebLoader webLoader = WebLoader.withBaseUrl(wireMock.baseUrl(), "sessionId");
+        final WireMock wireMock = wmRuntimeInfo.getWireMock();
+        final WebLoader webLoader = WebLoader.withBaseUrl(wmRuntimeInfo.getHttpBaseUrl(), "sessionId");
         // when
         webLoader.loadInput(2015, 1);
         //then
