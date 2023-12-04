@@ -1,9 +1,11 @@
 package de.tobiasbell.aoc.loader;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.nio.file.Path;
 
 public interface Loader {
-    public static Loader defaultLoader(final String savePath, final String sessionId) {
+    static @NotNull Loader defaultLoader(final @NotNull String savePath, final String sessionId) {
         return new CachingLoader(FileLoader.withBaseDirectory(Path.of(savePath)), WebLoader.withSession(sessionId));
     }
 

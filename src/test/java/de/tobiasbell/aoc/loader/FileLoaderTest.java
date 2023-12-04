@@ -1,5 +1,6 @@
 package de.tobiasbell.aoc.loader;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -13,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FileLoaderTest {
 
     @Test
-    void loadFromFile(@TempDir Path tempDir) throws IOException {
+    void loadFromFile(@TempDir @NotNull Path tempDir) throws IOException {
         // given
         final Path year = Files.createDirectory(tempDir.resolve("2015"));
         Files.writeString(year.resolve("day1"), "data", StandardCharsets.UTF_8);
@@ -25,7 +26,7 @@ class FileLoaderTest {
     }
 
     @Test
-    void saveInput(@TempDir Path tempDir) throws IOException {
+    void saveInput(@TempDir @NotNull Path tempDir) throws IOException {
         //given
         final Path base = tempDir.resolve("base");
         final FileLoader fileLoader = FileLoader.withBaseDirectory(base);

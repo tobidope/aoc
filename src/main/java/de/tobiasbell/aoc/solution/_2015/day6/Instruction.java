@@ -1,6 +1,8 @@
 package de.tobiasbell.aoc.solution._2015.day6;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,7 +12,7 @@ public record Instruction(LightCommand command, Coordinate from, Coordinate to) 
     public static final Pattern INSTRUCTION_RE =
             Pattern.compile("(?<command>turn (?:on|off)|toggle) (?<from>\\d+,\\d+) through (?<to>\\d+,\\d+)");
 
-    public static Instruction parse(final String instruction, Function<String, LightCommand> commandFactory) {
+    public static @NotNull Instruction parse(final @NotNull String instruction, @NotNull Function<String, LightCommand> commandFactory) {
         final Matcher matcher = INSTRUCTION_RE.matcher(instruction);
         if (matcher.matches()) {
             final LightCommand command = commandFactory.apply(matcher.group("command"));

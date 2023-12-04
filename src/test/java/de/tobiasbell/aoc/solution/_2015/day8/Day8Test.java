@@ -1,5 +1,6 @@
 package de.tobiasbell.aoc.solution._2015.day8;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -18,7 +19,7 @@ class Day8Test {
             "\"\\\",          3, 1",
             "\"\\x27\",       6, 1"
     })
-    void inMemoryString(final String input, int length, int inMemoryLength) {
+    void inMemoryString(final @NotNull String input, int length, int inMemoryLength) {
         assertThat(input.length()).isEqualTo(length);
         assertThat(Day8.inMemoryString(input).length()).isEqualTo(inMemoryLength);
     }
@@ -30,7 +31,7 @@ class Day8Test {
             "\"aaa\\\"aaa\", 10, 16",
             "\"\\x27\",       6, 11"
     })
-    void encodedString(final String input, int length, int encodedLength) {
+    void encodedString(final @NotNull String input, int length, int encodedLength) {
         assertThat(input.length()).isEqualTo(length);
         assertThat(Day8.encodedStringLength(input)).isEqualTo(encodedLength);
     }

@@ -1,6 +1,7 @@
 package de.tobiasbell.aoc.solution._2015.day4;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.jetbrains.annotations.NotNull;
 
 public class Day4 {
     public static int solve1(String key) {
@@ -21,12 +22,12 @@ public class Day4 {
         }
     }
 
-    private static boolean startsWith6Zeroes(String s) {
+    private static boolean startsWith6Zeroes(@NotNull String s) {
         return s.startsWith("000000");
     }
 
 
-    private static boolean startsWith5Zeroes(String s) {
+    private static boolean startsWith5Zeroes(@NotNull String s) {
         return s.startsWith("00000");
     }
 }

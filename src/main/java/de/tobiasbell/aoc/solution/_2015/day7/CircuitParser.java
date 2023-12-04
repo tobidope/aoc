@@ -1,11 +1,13 @@
 package de.tobiasbell.aoc.solution._2015.day7;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class CircuitParser {
     final WireTable table = new WireTable();
 
-    public WireTable parse(List<String> circuits) {
+    public @NotNull WireTable parse(@NotNull List<String> circuits) {
         for (var circuit : circuits) {
             final String[] elements = circuit.split(" ");
             switch (elements.length) {
@@ -27,7 +29,7 @@ public class CircuitParser {
         return table;
     }
 
-    private void parseBinaryOperator(String[] elements) {
+    private void parseBinaryOperator(String @NotNull [] elements) {
         final String operator = elements[1];
         final Wire target = table.getWire(elements[4]);
         switch (operator) {
@@ -59,7 +61,7 @@ public class CircuitParser {
         }
     }
 
-    private Expression parseExpression(String input) {
+    private @NotNull Expression parseExpression(@NotNull String input) {
         if (input.matches("\\d+")) {
             return new LiteralExpression(Integer.parseInt(input));
         }

@@ -1,5 +1,7 @@
 package de.tobiasbell.aoc.loader;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
@@ -13,11 +15,12 @@ public class FileLoader implements Loader {
         this.baseDirectory = baseDirectory;
     }
 
-    public static FileLoader withBaseDirectory(final Path baseDirectory) {
+    public static @NotNull FileLoader withBaseDirectory(final Path baseDirectory) {
         return new FileLoader(baseDirectory);
     }
 
-    public void saveInput(int year, int day, String input) throws IOException {
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
+    public void saveInput(int year, int day, @NotNull String input) throws IOException {
         final Path path = createPath(year, day);
         Files.createDirectories(path.getParent());
         Files.writeString(path, input, StandardCharsets.UTF_8);
@@ -38,7 +41,7 @@ public class FileLoader implements Loader {
         }
     }
 
-    private Path createPath(int year, int day) {
+    private @NotNull Path createPath(int year, int day) {
         return baseDirectory.resolve(String.valueOf(year)).resolve("day" + day);
     }
 }

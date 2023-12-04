@@ -2,8 +2,6 @@ package de.tobiasbell.aoc.solution._2015.day2;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 import static de.tobiasbell.aoc.TestConfig.testLoader;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,7 +21,7 @@ class Day2Test {
     }
 
     @Test
-    void solve1() throws IOException {
+    void solve1() {
         assertThat(Day2.solve1(INPUT)).isEqualTo(1598415);
     }
 
@@ -34,7 +32,7 @@ class Day2Test {
     }
 
     @Test
-    void solve2() throws IOException {
+    void solve2() {
         assertThat(Day2.solve2(INPUT)).isEqualTo(3812909L);
     }
 }

@@ -1,6 +1,8 @@
 package de.tobiasbell.aoc.solution._2015.day3;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -9,12 +11,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Day3 {
-    public static int visitedHouses(final String directions) {
+    public static int visitedHouses(final @NotNull String directions) {
         final Set<Point> points = visitedHouseCoordinates(directions);
         return points.size();
     }
 
-    public static int solve2(final String directions) {
+    public static int solve2(final @NotNull String directions) {
         String santaDirections = santaDirections(directions);
         String roboSantaDirections = roboSantaDirections(directions);
         final Set<Point> santaHouses = visitedHouseCoordinates(santaDirections);
@@ -23,7 +25,7 @@ public class Day3 {
         return santaHouses.size();
     }
 
-    private static String roboSantaDirections(String directions) {
+    private static @NotNull String roboSantaDirections(@NotNull String directions) {
         final StringBuilder builder = new StringBuilder();
         for (int i = 1; i < directions.length(); i += 2) {
             builder.append(directions.charAt(i));
@@ -31,7 +33,7 @@ public class Day3 {
         return builder.toString();
     }
 
-    private static String santaDirections(String directions) {
+    private static @NotNull String santaDirections(@NotNull String directions) {
         final StringBuilder builder = new StringBuilder();
         for (int i = 0; i < directions.length(); i += 2) {
             builder.append(directions.charAt(i));
@@ -39,13 +41,12 @@ public class Day3 {
         return builder.toString();
     }
 
-    private static Set<Point> visitedHouseCoordinates(String directions) {
+    private static @NotNull Set<Point> visitedHouseCoordinates(@NotNull String directions) {
         final List<Move> moves = directions.chars()
-                .mapToObj(c -> Move.of((char) c))
-                .collect(Collectors.toList());
+                .mapToObj(c -> Move.of((char) c)).toList();
         final Iterator<Move> iterator = moves.iterator();
         return Stream.iterate(new Point(0, 0),
-                point -> point.add(iterator.next().getDirection()))
+                        point -> point.add(iterator.next().getDirection()))
                 .limit(moves.size() + 1)
                 .collect(Collectors.toSet());
     }
@@ -76,13 +77,13 @@ public class Day3 {
         }
     }
 
-    public static record Point(int x, int y) {
+    public record Point(int x, int y) {
 
-        public static Point of(int x, int y) {
+        public static @NotNull Point of(int x, int y) {
             return new Point(x, y);
         }
 
-        public Point add(final Point other) {
+        public @NotNull Point add(final @NotNull Point other) {
             return new Point(this.x + other.x(),
                     this.y + other.y());
         }

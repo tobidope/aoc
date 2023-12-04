@@ -1,21 +1,23 @@
 package de.tobiasbell.aoc.solution._2015.day5;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.stream.Stream;
 
 public class Day5 {
 
-    public static boolean isNiceString(final String input) {
+    public static boolean isNiceString(final @NotNull String input) {
         return atLeastThreeVowels(input)
                 && twiceInRow(input)
                 && doesNotHave(input, "ab", "cd", "pq", "xy");
     }
 
-    public static boolean isNewNiceString(final String input) {
+    public static boolean isNewNiceString(final @NotNull String input) {
         return hasNonOverlappingPair(input)
                 && hasRepeatingLetterWithLetterBetween(input);
     }
 
-    private static boolean hasRepeatingLetterWithLetterBetween(String input) {
+    private static boolean hasRepeatingLetterWithLetterBetween(@NotNull String input) {
         for (int i = 0; i < input.length() - 2; i++) {
             if (input.charAt(i) == input.charAt(i + 2)) {
                 return true;
@@ -24,7 +26,7 @@ public class Day5 {
         return false;
     }
 
-    private static boolean hasNonOverlappingPair(String input) {
+    private static boolean hasNonOverlappingPair(@NotNull String input) {
         for (int i = 0; i < input.length() - 3; i++) {
             String firstPair = input.substring(i, i + 2);
             for (int j = i + 2; j < input.length() - 1; j++) {
@@ -37,7 +39,7 @@ public class Day5 {
         return false;
     }
 
-    private static boolean doesNotHave(String input, String... nots) {
+    private static boolean doesNotHave(@NotNull String input, String @NotNull ... nots) {
         for (String not : nots) {
             if (input.contains(not)) {
                 return false;
@@ -46,7 +48,7 @@ public class Day5 {
         return true;
     }
 
-    private static boolean twiceInRow(String input) {
+    private static boolean twiceInRow(@NotNull String input) {
         for (int i = 0; i < input.length() - 1; i++) {
             if (input.charAt(i) == input.charAt(i + 1)) {
                 return true;
@@ -55,7 +57,7 @@ public class Day5 {
         return false;
     }
 
-    private static boolean atLeastThreeVowels(String input) {
+    private static boolean atLeastThreeVowels(@NotNull String input) {
         int vowelCount = 0;
         for (int i = 0; i < input.length(); i++) {
             final char c = input.charAt(i);
@@ -69,13 +71,13 @@ public class Day5 {
         return false;
     }
 
-    public static long solve1(String input) {
+    public static long solve1(@NotNull String input) {
         return Stream.of(input.split("\\R"))
                 .filter(Day5::isNiceString)
                 .count();
     }
 
-    public static long solve2(String input) {
+    public static long solve2(@NotNull String input) {
         return Stream.of(input.split("\\R"))
                 .filter(Day5::isNewNiceString)
                 .count();

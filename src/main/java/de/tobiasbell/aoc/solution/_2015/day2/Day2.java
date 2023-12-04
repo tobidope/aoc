@@ -1,33 +1,33 @@
 package de.tobiasbell.aoc.solution._2015.day2;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Day2 {
-    public static long solve1(final String input) {
+    public static long solve1(final @NotNull String input) {
         return boxes(input)
                 .mapToLong(Box::wrappingPaperNeeded)
                 .sum();
     }
 
-    private static Stream<Box> boxes(String input) {
+    private static @NotNull Stream<Box> boxes(@NotNull String input) {
         return Stream.of(input.split("\\R"))
                 .map(Box::of);
     }
 
-    public static long solve2(String input) {
+    public static long solve2(@NotNull String input) {
         return boxes(input)
                 .mapToLong(Box::ribbonNeeded)
                 .sum();
     }
 
 
-    public static record Box(long length, long height, long width) {
-        public static Box of(final String input) {
+    public record Box(long length, long height, long width) {
+        public static @NotNull Box of(final @NotNull String input) {
             final List<Integer> dimensions = Stream.of(input.split("x"))
-                    .map(Integer::parseInt)
-                    .collect(Collectors.toList());
+                    .map(Integer::parseInt).toList();
             return new Box(dimensions.get(0), dimensions.get(1), dimensions.get(2));
         }
 

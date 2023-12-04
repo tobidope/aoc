@@ -1,5 +1,7 @@
 package de.tobiasbell.aoc.solution._2015.day6;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Day6 {
-    static Map<Coordinate, Brightness> createGrid(List<Instruction> instructions) {
+    static @NotNull Map<Coordinate, Brightness> createGrid(@NotNull List<Instruction> instructions) {
         final Map<Coordinate, Brightness> grid = new HashMap<>();
         for (var instruction : instructions) {
             final Coordinate from = instruction.from();
@@ -24,7 +26,7 @@ public class Day6 {
         return grid;
     }
 
-    public static long solve1(final String input) {
+    public static long solve1(final @NotNull String input) {
         final List<Instruction> instructions = Stream.of(input.split("\\R"))
                 .map(s -> Instruction.parse(s, Command::of))
                 .collect(Collectors.toList());
@@ -34,7 +36,7 @@ public class Day6 {
                 .count();
     }
 
-    public static long solve2(final String input) {
+    public static long solve2(final @NotNull String input) {
         final List<Instruction> instructions = Stream.of(input.split("\\R"))
                 .map(s -> Instruction.parse(s, NewCommand::of))
                 .collect(Collectors.toList());

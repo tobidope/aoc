@@ -1,5 +1,6 @@
 package de.tobiasbell.aoc.loader;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,11 +31,11 @@ public class WebLoader implements Loader {
         this.httpClient = HttpClient.newHttpClient();
     }
 
-    public static WebLoader withSession(String sessionId) {
+    public static @NotNull WebLoader withSession(String sessionId) {
         return new WebLoader(Objects.requireNonNull(sessionId));
     }
 
-    public static WebLoader withBaseUrl(String baseUrl, String sessionId) {
+    public static @NotNull WebLoader withBaseUrl(String baseUrl, String sessionId) {
         return new WebLoader(baseUrl, sessionId);
     }
 
@@ -44,6 +45,7 @@ public class WebLoader implements Loader {
                 .timeout(Duration.ofSeconds(10))
                 .method(method, HttpRequest.BodyPublishers.noBody())
                 .setHeader("Cookie", "session=" + sessionId)
+                .setHeader("User-Agent", "aoc-tobidope")
                 .build();
     }
 
