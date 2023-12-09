@@ -1,50 +1,59 @@
 package de.tobiasbell.aoc.solution._2023;
 
-import de.tobiasbell.aoc.solution._2023.util.ScratchCard;
+import de.tobiasbell.aoc.solution._2023.util.GameCard;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Day4 {
-
-    public static ScratchCard parseCard(final String line) {
-        final var split = line.split(":\\s+");
-        final var id = Integer.parseInt(split[0].substring(5).trim());
-        final var numberString = split[1].split("\\s+\\|\\s+");
-        return new ScratchCard(id,
-                parseNumbers(numberString[0]),
-                parseNumbers(numberString[1]));
-    }
-
-    private static List<Integer> parseNumbers(String s) {
-        return Stream.of(s.split("\\s+"))
-                .map(Integer::parseInt)
-                .toList();
-    }
-
-    public static long solve1(final String scratchCards) {
-        return Stream.of(scratchCards.split("\\R"))
+    public static long solve1(final String cards) {
+        return Stream.of(cards.split("\\R"))
                 .map(Day4::parseCard)
-                .mapToLong(ScratchCard::points)
+                .mapToLong(GameCard::points)
                 .sum();
     }
 
-    public static long solve2(final String scratchCards) {
-        final var cards = Stream.of(scratchCards.split("\\R"))
+    private static GameCard parseCard(String line) {
+        final var parts = line.split(":\\s+");
+        int id = Integer.parseInt(parts[0].split("\\s+")[1]);
+        final var numbers = parts[1].split("\\s+\\|\\s+");
+        return new GameCard(id,
+                parseNumbers(numbers[0]),
+                parseNumbers(numbers[1]));
+    }
+
+    private static Set<Integer> parseNumbers(String numbers) {
+        return Stream.of(numbers.split("\\s+"))
+                .map(String::trim)
+                .map(Integer::parseInt)
+                .collect(Collectors.toSet());
+    }
+
+    public static long solve2(String cards) {
+        final var gameCards = Stream.of(cards.split("\\R"))
                 .map(Day4::parseCard)
                 .toList();
-        final Map<Integer, Integer> totalCards = new HashMap<>();
-
-        for (int i = 0; i < cards.size(); i++) {
-            var card = cards.get(i);
-            totalCards.computeIfAbsent(card.id(), id -> 1);
-            var point = card.points()
-            if (point == 0) {
-                continue;
+        final var resultList = createResultList(gameCards.size());
+        for (int i = 0; i < gameCards.size(); i++) {
+            final var matching = gameCards.get(i).matchingNumbers();
+            final var multiplier = resultList.get(i);
+            for (int j = i + 1; j < resultList.size() && j <= i + matching; j++) {
+                var nextCard = resultList.get(j);
+                nextCard += multiplier;
+                resultList.set(j, nextCard);
             }
-            for (int j= card.id()+1; j<=i+car
         }
+        return resultList.stream()
+                .mapToLong(l ->l)
+                .sum();
+    }
+
+    private static List<Long> createResultList(int size) {
+        final Long[] result = new Long[size];
+        Arrays.fill(result, 1L);
+        return Arrays.asList(result);
     }
 }
